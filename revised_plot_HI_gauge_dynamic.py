@@ -48,7 +48,7 @@ def color(ds):
 def plot_gauge(ds,outdir):
     for i in range(len(dat['NAME'])):
         station_name = dat['NAME'][i]
-        site_lat = dat['Latitude'][i
+        site_lat = dat['Latitude'][i]
         site_lon = dat['Longitude'][i]
 
         _sub_ds = dat_format(ds, site_lon, site_lat)
