@@ -7,10 +7,7 @@ from matplotlib.transforms import Bbox
 
 from __const__ import tz
 
-#import pytz
-#tz = pytz.timezone("Asia/Manila")
-
-dat = pd.read_csv('/home/dloqueloque/Documents/EWF/samp_stations_cut.csv')#.to_dict('list')
+dat = pd.read_csv('samp_stations.csv')
 
 def dat_format(ds, site_lon, site_lat):
     _site_df = ds.sel(lon=site_lon, lat=site_lat, method='nearest').groupby('time').mean('ens', skipna=True).to_dataframe()
@@ -50,9 +47,9 @@ def color(ds):
 
 def plot_gauge(ds,outdir):
     for i in range(len(dat['NAME'])):
-        station_name = dat['NAME'][i] #dat[list(dat.keys())[1]][i]
-        site_lat = dat['Latitude'][i] #dat[list(dat.keys())[2]][i]
-        site_lon = dat['Longitude'][i] #dat[list(dat.keys())[3]][i]
+        station_name = dat['NAME'][i]
+        site_lat = dat['Latitude'][i
+        site_lon = dat['Longitude'][i]
 
         _sub_ds = dat_format(ds, site_lon, site_lat)
 
