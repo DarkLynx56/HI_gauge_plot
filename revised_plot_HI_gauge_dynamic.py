@@ -68,7 +68,6 @@ def plot_gauge(ds,outdir):
             _size = 0.2 
 
             _wedges, _text = ax.pie(_dat, radius = 0.95, colors=_outer_colors, counterclock=False, startangle=180, wedgeprops=dict(width= 0.5, edgecolor='w',  linewidth=0.8))
-
             ax.pie(_dat, radius=1-_size, colors=_inner_colors,counterclock=False,startangle=180, wedgeprops=dict(width=_size, edgecolor='w', linewidth=0.3))
 
             for i, p in enumerate(_wedges):
