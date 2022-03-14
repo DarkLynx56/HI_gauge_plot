@@ -51,9 +51,7 @@ def plot_gauge(ds,outdir):
         site_lat = dat['Latitude'][i]
         site_lon = dat['Longitude'][i]
 
-        _sub_ds = dat_format(ds, site_lon, site_lat)
-
-        
+        _sub_ds = dat_format(ds, site_lon, site_lat)        
         _fname = ([_sub_ds[i].time.dt.strftime('%Y-%m-%d').isel(time=0).values.tolist() for i in range(len(_sub_ds[:3]))])
         
         fig, ax = plt.subplots(figsize=(8, 8), subplot_kw=dict(aspect="equal"))
@@ -95,5 +93,4 @@ def plot_gauge(ds,outdir):
         plt.legend(handles=[red,purple],loc=10, bbox_to_anchor=(0.25, 0.1, 0.5, 0.5), ncol=2)
 
         fig.savefig(outdir+station_name+' WRF_HI_'+_fname[0]+'-'+_fname[2]+'.png', dpi=300, facecolor = None, bbox_inches = Bbox([[0,2.5],[8,8]]))
-
         plt.close()
