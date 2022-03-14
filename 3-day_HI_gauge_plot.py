@@ -63,7 +63,7 @@ def plot_gauge(ds,outdir):
         _time = (pd.Series(pd.date_range('6:00', '18:00', freq='H')).dt.strftime("%-I %p").replace('12 PM','12 NOON')).tolist()
         _dat.append(12), _time.append("")
         
-        _outer_colors = ['white']*12 
+        _outer_colors = ['white']*13 
         _inner_colors = [color(_sub_ds[i]) for i in range(len(_sub_ds[:3]))]
         _size = 0.16
 
