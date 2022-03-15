@@ -7,7 +7,7 @@ from matplotlib.transforms import Bbox
 
 from __const__ import tz
 
-dat = pd.read_csv('samp_stations.csv')
+dat = pd.read_csv('HI_cities.csv')
 
 def dat_format(ds, site_lon, site_lat):
     _site_df = ds.sel(lon=site_lon, lat=site_lat, method='nearest').groupby('time').mean('ens', skipna=True).to_dataframe()
