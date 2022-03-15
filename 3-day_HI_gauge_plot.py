@@ -66,9 +66,9 @@ def plot_gauge(ds,outdir):
         _size = 0.16
 
         _wedges, _text = ax.pie(_dat, radius = 0.95, colors=_outer_colors, counterclock=False, startangle=180, wedgeprops=dict(width= 0.45, edgecolor='w',  linewidth=0.6))
-        ax.pie(_dat, radius=0.95, colors=_inner_colors[2],counterclock=False,startangle=180, wedgeprops=dict(width=0.15, edgecolor='w', linewidth=0.6))
+        ax.pie(_dat, radius=0.95, colors=_inner_colors[0],counterclock=False,startangle=180, wedgeprops=dict(width=0.15, edgecolor='w', linewidth=0.6))
         ax.pie(_dat, radius=0.95-_size, colors=_inner_colors[1],counterclock=False,startangle=180, wedgeprops=dict(width=0.16, edgecolor='w', linewidth=0.6))
-        ax.pie(_dat, radius=(0.95-_size)-0.17, colors=_inner_colors[0],counterclock=False,startangle=180, wedgeprops=dict(width=0.15, edgecolor='w', linewidth=0.6))
+        ax.pie(_dat, radius=(0.95-_size)-0.17, colors=_inner_colors[2],counterclock=False,startangle=180, wedgeprops=dict(width=0.15, edgecolor='w', linewidth=0.6))
 
         for i, p in enumerate(_wedges):
             y = np.sin(np.deg2rad(p.theta2))
@@ -85,9 +85,9 @@ def plot_gauge(ds,outdir):
 
         day = ([_sub_ds[i].time.dt.strftime('%m-%d').isel(time=0).values.tolist() for i in np.arange(len(_sub_ds[:3]))])
         ax.text(x-0.37,y-0.3,"Day", fontweight = 'semibold')        
-        ax.text(x-0.47,y-0.15,day[0], rotation='vertical')
+        ax.text(x-0.47,y-0.15,day[2], rotation='vertical')
         ax.text(x-0.32,y-0.15,day[1], rotation='vertical')
-        ax.text(x-0.17,y-0.15,day[2], rotation='vertical')
+        ax.text(x-0.17,y-0.15,day[0], rotation='vertical')
 
         red, purple = mpatches.Patch(color='red', label='Danger'), mpatches.Patch(color='purple', label='Extreme Danger')
         plt.legend(handles=[red,purple],loc=10, bbox_to_anchor=(0.25, 0.1, 0.5, 0.5), ncol=2)
