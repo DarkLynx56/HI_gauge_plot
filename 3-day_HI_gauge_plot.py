@@ -93,6 +93,6 @@ def plot_gauge(ds,outdir):
         red, purple = mpatches.Patch(color='red', label='Danger'), mpatches.Patch(color='purple', label='Extreme Danger')
         plt.legend(handles=[red,purple],loc=10, bbox_to_anchor=(0.25, 0.08, 0.5, 0.5), ncol=2)
 
-        fig.savefig(outdir+station_name+' WRF_HI_'+_fname[0]+'-'+_fname[2]+'.png', dpi=300, facecolor = None, bbox_inches = Bbox([[0,2.5],[8,8]]))
+        fig.savefig(outdir+station_name+'_WRF_HI_'+_fname[0]+'-'+_fname[2]+'.png', dpi=300, facecolor = None, bbox_inches = Bbox([[0,2.5],[8,8]]))
 
         plt.close()
