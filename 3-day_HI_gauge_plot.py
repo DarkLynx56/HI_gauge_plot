@@ -83,7 +83,7 @@ def plot_gauge(ds,outdir):
             elif p.theta1 < 74:
                 ax.annotate(_time[i], xy=(x,y), xytext=(0,0),textcoords='offset points', ha='left', va='center')
 
-        day = ([_sub_ds[i].time.dt.strftime('%b %d,%Y').isel(time=0).values.tolist() for i in np.arange(len(_sub_ds[:3]))])[::-1]
+        day = ([_sub_ds[i].time.dt.strftime('%b %d,%Y').isel(time=0).values.tolist() for i in np.arange(len(_sub_ds[:3]))])
         for i,(j,t) in enumerate ((zip(np.arange(0.13,0.52,0.16),np.linspace(0.0,0.2,3)[::-1]))):
             ax.annotate(day[i], xy=(x-j, y), xytext=(-0.2, -0.1-t), arrowprops=dict(arrowstyle="-", connectionstyle="angle,angleA=0,angleB=90,rad=0", color='#C5C5C5'))
 
