@@ -55,7 +55,7 @@ def plot_gauge(ds,outdir):
         site_lat = dat['Latitude'][i]
         site_lon = dat['Longitude'][i]
 
-        _sub_ds = dat_format(ds, site_lon, site_lat)  
+        _sub_ds = dat_format(ds, site_lon, site_lat)
         _fname = ([_sub_ds[i].time.dt.strftime('%Y-%m-%d').isel(time=0).values.tolist() for i in range(len(_sub_ds[:3]))])
         
         fig, ax = plt.subplots(figsize=(8, 8), subplot_kw=dict(aspect="equal"))
@@ -70,9 +70,13 @@ def plot_gauge(ds,outdir):
         _size = 0.16
 
         _wedges, _text = ax.pie(_dat, radius = 0.95, colors=_outer_colors, counterclock=False, startangle=180, wedgeprops=dict(width= 0.45, edgecolor='w',  linewidth=0.6))
-        ax.pie(_dat, radius=0.95, colors=_inner_colors[0],counterclock=False,startangle=180, wedgeprops=dict(width=0.15, edgecolor='w', linewidth=0.6))
-        ax.pie(_dat, radius=0.95-_size, colors=_inner_colors[1],counterclock=False,startangle=180, wedgeprops=dict(width=0.16, edgecolor='w', linewidth=0.6, alpha=0.4))
-        ax.pie(_dat, radius=(0.95-_size)-0.17, colors=_inner_colors[2],counterclock=False,startangle=180, wedgeprops=dict(width=0.15, edgecolor='w', linewidth=0.6, alpha=0.4))
+        d1 = ax.pie(_dat, radius=0.95, colors=_inner_colors[0],counterclock=False,startangle=180, wedgeprops=dict(width=0.15, edgecolor='w', linewidth=0.6))
+        d2 = ax.pie(_dat, radius=0.95-_size, colors=_inner_colors[1],counterclock=False,startangle=180, wedgeprops=dict(width=0.16, edgecolor='w', linewidth=0.6, alpha=0.4))
+        d3 = ax.pie(_dat, radius=(0.95-_size)-0.17, colors=_inner_colors[2],counterclock=False,startangle=180, wedgeprops=dict(width=0.15, edgecolor='w', linewidth=0.6, alpha=0.4))
+
+        for patch in (d1,d2,d3):
+            patch[0][0].set_hatch('...')
+            patch[0][0].set_edgecolor('k')
 
         for i, p in enumerate(_wedges):
             y = np.sin(np.deg2rad(p.theta2))
@@ -87,7 +91,7 @@ def plot_gauge(ds,outdir):
             elif p.theta1 < 74:
                 ax.annotate(_time[i], xy=(x,y), xytext=(0,0),textcoords='offset points', ha='left', va='center')
 
-        day = ([_sub_ds[i].time.dt.strftime('%b %d,%Y').isel(time=0).values.tolist() for i in np.arange(len(_sub_ds[:3]))]) 
+        day = ([_sub_ds[i].time.dt.strftime('%b %d,%Y').isel(time=0).values.tolist() for i in np.arange(len(_sub_ds[:3]))])
         for i,(j,t) in enumerate ((zip(np.arange(0.13,0.52,0.16),np.linspace(0.0,0.2,3)[::-1]))):
             ax.annotate(day[i], xy=(x-j, y), xytext=(-0.2, -0.1-t), arrowprops=dict(arrowstyle="-", connectionstyle="angle,angleA=0,angleB=90,rad=0", color='#C5C5C5'))
 
