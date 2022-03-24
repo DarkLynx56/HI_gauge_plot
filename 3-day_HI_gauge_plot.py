@@ -74,8 +74,7 @@ def plot_gauge(ds,outdir):
         d2 = ax.pie(_dat, radius=0.95-_size, colors=_inner_colors[1],counterclock=False,startangle=180, wedgeprops=dict(width=0.16, edgecolor='w', linewidth=0.6, alpha=0.4))
         d3 = ax.pie(_dat, radius=(0.95-_size)-0.17, colors=_inner_colors[2],counterclock=False,startangle=180, wedgeprops=dict(width=0.15, edgecolor='w', linewidth=0.6, alpha=0.4))
 
-        for patch in (d1,d2,d3):
-            patch[0][0].set_hatch('...'), patch[0][0].set_edgecolor('k')
+        d1[0][0].set_hatch('...'), d1[0][0].set_edgecolor('k'), d1[0][0].set_alpha(0.4)
 
         for i, p in enumerate(_wedges):
             y = np.sin(np.deg2rad(p.theta2))
