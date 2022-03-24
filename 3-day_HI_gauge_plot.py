@@ -70,11 +70,11 @@ def plot_gauge(ds,outdir):
         _size = 0.16
 
         _wedges, _text = ax.pie(_dat, radius = 0.95, colors=_outer_colors, counterclock=False, startangle=180, wedgeprops=dict(width= 0.45, edgecolor='w',  linewidth=0.6))
-        d1 = ax.pie(_dat, radius=0.95, colors=_inner_colors[0],counterclock=False,startangle=180, wedgeprops=dict(width=0.15, edgecolor='w', linewidth=0.6))
-        d2 = ax.pie(_dat, radius=0.95-_size, colors=_inner_colors[1],counterclock=False,startangle=180, wedgeprops=dict(width=0.16, edgecolor='w', linewidth=0.6, alpha=0.4))
-        d3 = ax.pie(_dat, radius=(0.95-_size)-0.17, colors=_inner_colors[2],counterclock=False,startangle=180, wedgeprops=dict(width=0.15, edgecolor='w', linewidth=0.6, alpha=0.4))
+        _d1 = ax.pie(_dat, radius=0.95, colors=_inner_colors[0],counterclock=False,startangle=180, wedgeprops=dict(width=0.15, edgecolor='w', linewidth=0.6))
+        _d2 = ax.pie(_dat, radius=0.95-_size, colors=_inner_colors[1],counterclock=False,startangle=180, wedgeprops=dict(width=0.16, edgecolor='w', linewidth=0.6, alpha=0.4))
+        _d3 = ax.pie(_dat, radius=(0.95-_size)-0.17, colors=_inner_colors[2],counterclock=False,startangle=180, wedgeprops=dict(width=0.15, edgecolor='w', linewidth=0.6, alpha=0.4))
 
-        d1[0][0].set_hatch('...'), d1[0][0].set_edgecolor('k'), d1[0][0].set_alpha(0.4)
+        _d1[0][0].set_hatch('...'), _d1[0][0].set_edgecolor('k'), _d1[0][0].set_alpha(0.4)
 
         for i, p in enumerate(_wedges):
             y = np.sin(np.deg2rad(p.theta2))
