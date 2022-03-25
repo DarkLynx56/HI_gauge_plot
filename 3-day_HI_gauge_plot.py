@@ -7,8 +7,6 @@ from matplotlib.transforms import Bbox
 
 from __const__ import tz
 
-dat = pd.read_csv('HI_cities.csv')
-
 def dat_format(ds, site_lon, site_lat):
     _site_df = ds.sel(lon=site_lon, lat=site_lat, method='nearest').groupby('time').mean('ens', skipna=True).to_dataframe()
     _site_df = _site_df.tz_localize('utc').tz_convert(tz).between_time('7:00','18:00').reset_index()
@@ -57,9 +55,11 @@ def plot_gauge(ds,outdir):
 
         _sub_ds = dat_format(ds, site_lon, site_lat)
         _fname = ([_sub_ds[i].time.dt.strftime('%Y-%m-%d').isel(time=0).values.tolist() for i in range(len(_sub_ds[:3]))])
-        
+        _init_time = pd.Series(ds['time'].values).dt.tz_localize('utc').dt.tz_convert(tz).dt.tz_localize(None)
+
         fig, ax = plt.subplots(figsize=(8, 8), subplot_kw=dict(aspect="equal"))
-        fig.suptitle(station_name+' Heat Index \n ('+_fname[0]+' to '+ _fname[2]+')', ha='center', y=0.95, fontsize=20)
+        fig.suptitle(station_name+' Heat Index \n ('+_fname[0]+' to '+ _fname[2]+')', ha='center', y=0.95, fontsize=15)
+        ax.annotate('WRF ensemble forecast initialized at '+_init_time.dt.strftime('%Y-%m-%d %H')[0]+' PHT', xy=(-0.85,1.2))
 
         _dat = np.ones(12).tolist()
         _time = (pd.Series(pd.date_range('6:00', '18:00', freq='H')).dt.strftime("%-I %p").replace('12 PM','12 NOON')).tolist()
@@ -70,11 +70,18 @@ def plot_gauge(ds,outdir):
         _size = 0.16
 
         _wedges, _text = ax.pie(_dat, radius = 0.95, colors=_outer_colors, counterclock=False, startangle=180, wedgeprops=dict(width= 0.45, edgecolor='w',  linewidth=0.6))
-        _d1 = ax.pie(_dat, radius=0.95, colors=_inner_colors[0],counterclock=False,startangle=180, wedgeprops=dict(width=0.15, edgecolor='w', linewidth=0.6))
-        _d2 = ax.pie(_dat, radius=0.95-_size, colors=_inner_colors[1],counterclock=False,startangle=180, wedgeprops=dict(width=0.16, edgecolor='w', linewidth=0.6, alpha=0.4))
-        _d3 = ax.pie(_dat, radius=(0.95-_size)-0.17, colors=_inner_colors[2],counterclock=False,startangle=180, wedgeprops=dict(width=0.15, edgecolor='w', linewidth=0.6, alpha=0.4))
+        d1 = ax.pie(_dat, radius=0.95, colors=_inner_colors[0],counterclock=False,startangle=180, wedgeprops=dict(width=0.15, edgecolor='w', linewidth=0.6))
+        d2 = ax.pie(_dat, radius=0.95-_size, colors=_inner_colors[1],counterclock=False,startangle=180, wedgeprops=dict(width=0.16, edgecolor='w', linewidth=0.6, alpha=0.4))
+        d3 = ax.pie(_dat, radius=(0.95-_size)-0.17, colors=_inner_colors[2],counterclock=False,startangle=180, wedgeprops=dict(width=0.15, edgecolor='w', linewidth=0.6, alpha=0.4))
 
-        _d1[0][0].set_hatch('...'), _d1[0][0].set_edgecolor('k'), _d1[0][0].set_alpha(0.4)
+        # Get poisitions of missing values and plot with hatches
+        nan1, nan2, nan3 = [i for i, e in enumerate(_sub_ds[0].values.tolist()) if e == 0],[i for i, e in enumerate(_sub_ds[1].values.tolist()) if e == 0], [i for i, e in enumerate(_sub_ds[2].values.tolist()) if e == 0]
+        for i in nan1:
+            d1[0][i].set_hatch('...'), d1[0][i].set_edgecolor('k'), d1[0][i].set_alpha(0.4)
+        for i in nan2:
+            d2[0][i].set_hatch('...'), d2[0][i].set_edgecolor('k'), d2[0][i].set_alpha(0.4)
+        for i in nan3:
+            d3[0][i].set_hatch('...'), d3[0][i].set_edgecolor('k'), d3[0][i].set_alpha(0.4)
 
         for i, p in enumerate(_wedges):
             y = np.sin(np.deg2rad(p.theta2))
