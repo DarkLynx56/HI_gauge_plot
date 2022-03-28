@@ -17,7 +17,7 @@ def dat_format(ds, site_lon, site_lat):
     _days = _data_reset.resample(time='1D').mean().time.dt.day.values.tolist()
     dat_formatted = []
     for i in _days:
-        if ds.time.isel(time=0).time.dt.day == _days[0]:
+        if ds.time.isel(time=0).time.dt.day == i:
             select  = np.insert(_data_reset.hi.sel(time=_data_reset.time.dt.day==i),0,0).fillna(0)
         else:
             select = _data_reset.hi.sel(time=_data_reset.time.dt.day==i).fillna(0)
